@@ -1,5 +1,6 @@
 defmodule DiscussWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :discuss
+  import DiscussWeb.CORSHeaders
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -47,5 +48,17 @@ defmodule DiscussWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+
+  plug CORSPlug,
+    origins: [
+      "localhost",
+      "www.dawrat.com",
+      "api.dawrat.com",
+      "dev.dawrat.com",
+      "testapi.dawrat.com",
+      "dawrat.fly.dev"
+    ],
+    headers: discuss_cors_headers()
+
   plug DiscussWeb.Router
 end
